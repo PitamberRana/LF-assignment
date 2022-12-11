@@ -1,0 +1,17 @@
+GET http://localhost:3001/patientList
+
+###
+POST http://localhost:3001/patientList
+content-type: application/json
+
+  {
+    "name": "Stone Bass",
+    "phone": "1-5468780-05866",
+    "city": "554-3052 Et Ave",
+    "last_appointment": "Mar 09, 2022",
+    "next_appointment": "Apr 16, 2022",
+    "register_date": "Feb 1,2022"
+  }
+
+###
+DELETE http://localhost:3001/patientList/1

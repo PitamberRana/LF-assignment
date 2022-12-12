@@ -26,7 +26,7 @@ export default function PatientList({ query, patientList }) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ background: "lime" }}>
-              <TableCell>ID</TableCell>
+              {/* <TableCell>ID</TableCell> */}
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Phone number</TableCell>
               <TableCell align="left">City</TableCell>
@@ -44,9 +44,9 @@ export default function PatientList({ query, patientList }) {
                   key={data.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  {/* <TableCell component="th" scope="row">
                     {data.id}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="left">{data.name}</TableCell>
                   <TableCell align="left">{data.phone}</TableCell>
                   <TableCell align="left">{data.city}</TableCell>

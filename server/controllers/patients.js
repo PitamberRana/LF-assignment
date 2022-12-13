@@ -19,14 +19,14 @@ patientRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-patientRouter.post("/", async (req, res, next) => {
-  try {
-    const patient = new Patient(req.body);
-    const savedpatient = await patient.save();
-    res.status(201).json(savedpatient);
-  } catch (error) {
-    next(error);
-  }
+patientRouter.post("/", (req, res, next) => {
+  const patient = new Patient(req.body);
+  patient
+    .save()
+    .then((savedpatient) => {
+      res.json(savedpatient);
+    })
+    .catch((error) => next(error));
 });
 
 patientRouter.delete("/:id", (request, response, next) => {
@@ -37,15 +37,14 @@ patientRouter.delete("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-patientRouter.put("/:id", async (req, res, next) => {
-  try {
-    const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).json(patient);
-  } catch (error) {
-    next(error);
-  }
+patientRouter.put("/:id", (req, res, next) => {
+  const patient = req.body;
+  console.log(patient);
+  Patient.findByIdAndUpdate(req.params.id, patient, { new: true })
+    .then((updatedPateint) => {
+      res.json(updatedPateint);
+    })
+    .catch((error) => next(error));
 });
 
 module.exports = patientRouter;

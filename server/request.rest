@@ -1,12 +1,18 @@
 GET http://localhost:3001/patientList
 
 ###
+GET http://localhost:3001/patientList/6395e2f16e9005285cc726c2
+
+###
 POST http://localhost:3001/patientList
 content-type: application/json
 
   {
     "name": "Stone Bass",
-    "phone": "1-5468780-05866",
+    "contact":54687800586,
+    "dob":"Dec 9, 1995",
+    "email": "bass@gmail.com",
+    "profile_pic":"url",
     "city": "554-3052 Et Ave",
     "last_appointment": "Mar 09, 2022",
     "next_appointment": "Apr 16, 2022",
@@ -14,4 +20,37 @@ content-type: application/json
   }
 
 ###
-DELETE http://localhost:3001/patientList/1
+DELETE http://localhost:3001/patientList/6395e30c2042a97f30e76032
+
+###
+PUT  http://localhost:3001/patientList/6395dad7cd5e8ea9e05d70de
+content-type: application/json
+
+  {
+    "name": "Happy Singh",
+    "contact":9847019120,
+    "dob":"Nov 9, 1995",
+    "email": "happy@gmail.com",
+    "profile_pic":"url",
+    "city": "pokhara",
+    "last_appointment": "2022-03-18T18:15:00.000Z",
+    "next_appointment": "2022-04-09T18:15:00.000Z",
+    "register_date": "2022-01-04T18:15:00.000Z"
+  }
+
+
+###
+GET http://localhost:3001/users
+
+###
+POST http://localhost:3001/users
+content-type: application/json
+
+
+ {
+  "fullname":"hari padey",
+  "email":"abc@gmail.com",
+  "password":"123"
+  }
+
+

@@ -1,32 +1,31 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
-
-const url = process.env.MONGODB_URI;
-
-console.log("connecting to", url);
-
-mongoose
-  .connect(url)
-  .then((result) => {
-    console.log("connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB:", error.message);
-  });
 
 const patientSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  phone: {
+  contact: {
     type: Number,
     required: true,
   },
-  city: String,
-  last_appointment: Date,
-  next_appointment: Date,
-  register_date: Date,
+  email: {
+    type: String,
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  profile_pic: {
+    type: String,
+    required: true,
+  },
+  gender: { type: String },
+  city: { type: String },
+  last_appointment: { type: Date },
+  next_appointment: { type: Date },
+  register_date: { type: Date },
 });
 
 patientSchema.set("toJSON", {

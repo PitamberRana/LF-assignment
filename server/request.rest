@@ -6,14 +6,15 @@ GET http://localhost:3001/patientList/6395e2f16e9005285cc726c2
 ###
 POST http://localhost:3001/patientList
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY2RAZ21haWwuY29tIiwiaWQiOiI2Mzk4NWY1YzNjZTQ0ODI5NDM1NTczYTYiLCJpYXQiOjE2NzA5NDc1NTIsImV4cCI6MTY3MDk1MTE1Mn0.tkL7Bb62NALvu11NDbsI5BtolfJ_ZplanMe5noxj4rQ
 
   {
-    "name": "Stone Bass",
-    "contact":54687800586,
-    "dob":"Dec 9, 1995",
-    "email": "bass@gmail.com",
+    "name": "Hello Nepal",
+    "contact":239121454,
+    "dob":"Dec 19, 1995",
+    "email": "hello@gmail.com",
     "profile_pic":"url",
-    "city": "554-3052 Et Ave",
+    "city": "554-3052 Park Ave",
     "last_appointment": "Mar 09, 2022",
     "next_appointment": "Apr 16, 2022",
     "register_date": "Feb 1,2022"
@@ -28,9 +29,9 @@ content-type: application/json
 
   {
     "name": "Happy Singh",
-    "contact":9847019120,
+    "contact":98470197899,
     "dob":"Nov 9, 1995",
-    "email": "happy@gmail.com",
+    "email": "singh123@gmail.com",
     "profile_pic":"url",
     "city": "pokhara",
     "last_appointment": "2022-03-18T18:15:00.000Z",
@@ -43,14 +44,24 @@ content-type: application/json
 GET http://localhost:3001/users
 
 ###
-POST http://localhost:3001/users
+POST http://localhost:3001/users/register
 content-type: application/json
 
 
  {
   "fullname":"hari padey",
-  "email":"abc@gmail.com",
+  "email":"abcd@gmail.com",
   "password":"123"
   }
 
+
+###
+POST http://localhost:3001/users/login
+content-type: application/json
+
+
+ {
+  "email":"abcd@gmail.com",
+  "password":"123"
+  }
 

@@ -1,26 +1,63 @@
 const Patient = require("../models/patient");
+const User = require("../models/user");
 const patientRouter = require("express").Router();
+const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary");
+const uploader = require("../multer");
 
-patientRouter.get("/", (request, response) => {
-  Patient.find({}).then((patients) => {
-    response.json(patients);
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
+patientRouter.post("/", uploader.single("file"), async (req, res) => {
+  const upload = await cloudinary.v2.uploader.upload(req.file.path, {
+    folder: "patientImg",
+  });
+  return res.json({
+    success: true,
+    imgUrl: upload.secure_url,
   });
 });
 
-patientRouter.get("/:id", (request, response, next) => {
-  Patient.findById(request.params.id)
+patientRouter.get("/", (req, res) => {
+  Patient.find({}).then((patients) => {
+    res.json(patients);
+  });
+});
+
+patientRouter.get("/:id", (req, res, next) => {
+  Patient.findById(req.params.id)
     .then((patient) => {
       if (patient) {
-        response.json(patient);
+        res.json(patient);
       } else {
-        response.status(404).end();
+        res.status(404).end();
       }
     })
     .catch((error) => next(error));
 });
 
-patientRouter.post("/", (req, res, next) => {
-  const patient = new Patient(req.body);
+const getTokenFrom = (req) => {
+  const authorization = req.get("authorization");
+  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+    return authorization.substring(7);
+  }
+  return null;
+};
+
+patientRouter.post("/", async (req, res, next) => {
+  const token = getTokenFrom(req);
+  // console.log(token);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  // console.log(decodedToken.id);
+  if (!decodedToken.id) {
+    return res.status(401).json({ error: "token missing or invalid" });
+  }
+  const user = await User.findById(decodedToken.id);
+
+  const patient = new Patient({ ...req.body, user: user.fullname });
   patient
     .save()
     .then((savedpatient) => {
@@ -29,10 +66,10 @@ patientRouter.post("/", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-patientRouter.delete("/:id", (request, response, next) => {
-  Patient.findByIdAndRemove(request.params.id)
+patientRouter.delete("/:id", (req, res, next) => {
+  Patient.findByIdAndRemove(req.params.id)
     .then(() => {
-      response.status(204).end();
+      res.status(204).end();
     })
     .catch((error) => next(error));
 });

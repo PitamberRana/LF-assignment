@@ -4,6 +4,11 @@ const config = require("../utils/config");
 const User = require("../models/user");
 const userRouter = require("express").Router();
 
+userRouter.get("/", async (req, res) => {
+  const user = await User.find({});
+  res.status(200).json(user);
+});
+
 userRouter.post("/register", async (request, response) => {
   const { fullname, email, password } = request.body;
 

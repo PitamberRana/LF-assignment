@@ -26,6 +26,10 @@ const patientSchema = new mongoose.Schema({
   last_appointment: { type: Date },
   next_appointment: { type: Date },
   register_date: { type: Date },
+  special_attention: { type: Boolean },
+  user: {
+    type: String,
+  },
 });
 
 patientSchema.set("toJSON", {

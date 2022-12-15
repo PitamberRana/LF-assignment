@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -6,15 +6,26 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import registrService from "../services/register";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const [fullname, setFullname] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    const newUser = await registrService.register({
+      fullname,
+      email,
+      password,
     });
+    setUser(newUser);
+    navigate("/");
   };
 
   return (
@@ -41,6 +52,8 @@ export default function Register() {
                 id="fullname"
                 label="Full Name"
                 autoFocus
+                value={fullname}
+                onChange={({ target }) => setFullname(target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -51,6 +64,8 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={({ target }) => setemail(target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -62,6 +77,8 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
               />
             </Grid>
           </Grid>

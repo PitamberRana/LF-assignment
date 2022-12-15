@@ -7,6 +7,7 @@ import Edit from "./components/Edit";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import patientService from "./services/patient";
+import PatientDetail from "./components/PatientDetail";
 
 function App() {
   const [patientList, setPatientList] = useState([]);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home patientList={patientList} />} />
           <Route path="/add" element={<Add />} />
           <Route path="/edit" element={<Edit />} />
+          <Route path="/id" element={<PatientDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

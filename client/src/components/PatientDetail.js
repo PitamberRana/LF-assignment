@@ -29,7 +29,7 @@ export default function PatientDetail() {
             <Avatar
               alt="profile"
               src="https://res.cloudinary.com/drgujw4gf/image/upload/v1670998605/patientImg/jzm1em2ulnm6jjujbbzs.jpg"
-              sx={{ width: 150, height: 150 }}
+              sx={{ width: 120, height: 120 }}
             />
             <Typography variant="h4"> Ram prasad</Typography>
             <Typography variant="subtitle2"> Ramprasad@gmail.com</Typography>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,9 +8,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function PatientList({ query, patientList }) {
+export default function PatientList({ query }) {
   const navigate = useNavigate();
+
+  const patientList = useSelector((state) => state.patient);
 
   const handleEdit = (id) => {
     console.log("edit", id);
@@ -25,8 +28,8 @@ export default function PatientList({ query, patientList }) {
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow sx={{ background: "lime" }}>
-              {/* <TableCell>ID</TableCell> */}
+            <TableRow sx={{ background: "#95e6cc" }}>
+              <TableCell>Special Care</TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Phone number</TableCell>
               <TableCell align="left">City</TableCell>
@@ -44,9 +47,9 @@ export default function PatientList({ query, patientList }) {
                   key={data.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {/* <TableCell component="th" scope="row">
-                    {data.id}
-                  </TableCell> */}
+                  <TableCell component="th" scope="row">
+                    star
+                  </TableCell>
                   <TableCell align="left">{data.name}</TableCell>
                   <TableCell align="left">{data.phone}</TableCell>
                   <TableCell align="left">{data.city}</TableCell>

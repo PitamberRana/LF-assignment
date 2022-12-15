@@ -8,13 +8,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import loginService from "../services/login";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../reducers/userReducer";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,8 +25,7 @@ export default function Login() {
       password,
     });
     window.localStorage.setItem("loggedinUser", JSON.stringify(user));
-    loginService.setToken(user.token);
-    setUser(user);
+    dispatch(setUser(user));
     navigate("/");
   };
 

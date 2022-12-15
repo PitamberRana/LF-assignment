@@ -1,27 +1,28 @@
 import Home from "./components/Home";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Nav from "./components/Nav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Add from "./components/Add";
 import Edit from "./components/Edit";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import patientService from "./services/patient";
 import PatientDetail from "./components/PatientDetail";
+import { getPatient } from "./reducers/patientReducer";
+import { useDispatch } from "react-redux";
+import { loginUser } from "./reducers/userReducer";
 
 function App() {
-  const [patientList, setPatientList] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    patientService.getAll().then((result) => setPatientList(result));
-  }, []);
+    dispatch(getPatient());
+  }, [dispatch]);
 
   return (
     <>
       <Router>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home patientList={patientList} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/add" element={<Add />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/id" element={<PatientDetail />} />

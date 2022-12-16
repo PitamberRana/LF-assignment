@@ -25,8 +25,14 @@ export default function Login({ setMsg, setSeverity }) {
       email,
       password,
     });
-    console.log(user);
-    if (user.email) {
+
+    if (!user.email) {
+      setSeverity("error");
+      setMsg("invalid username or password");
+      setTimeout(() => {
+        setMsg(null);
+      }, 5000);
+    } else {
       setSeverity("success");
       setMsg("Successfully logged in");
       setTimeout(() => {
@@ -35,13 +41,6 @@ export default function Login({ setMsg, setSeverity }) {
       window.localStorage.setItem("loggedinUser", JSON.stringify(user));
       dispatch(setUser(user));
       navigate("/");
-    } else {
-      console.log("login component");
-      setSeverity("error");
-      setMsg("invalid username or password");
-      setTimeout(() => {
-        setMsg(null);
-      }, 5000);
     }
   };
 

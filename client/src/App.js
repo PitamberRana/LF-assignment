@@ -67,6 +67,7 @@ function App() {
               />
             }
           />
+          <Route path="/login" element={<Login />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/id" element={<PatientDetail />} />
           <Route path="/register" element={<Register />} />

@@ -29,8 +29,8 @@ export default function PatientList({ query }) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ background: "#2ecc71" }}>
-              <TableCell>Special Care</TableCell>
-              <TableCell align="left">Name</TableCell>
+              <TableCell align="left">Special Care</TableCell>
+              <TableCell align="left"> Name</TableCell>
               <TableCell align="left">Phone number</TableCell>
               <TableCell align="left">City</TableCell>
               <TableCell align="left">Last Appointment</TableCell>

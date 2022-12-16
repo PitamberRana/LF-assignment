@@ -15,7 +15,15 @@ export default function Nav() {
   // const user = useSelector((state) => state.user);
   const user = JSON.parse(window.localStorage.getItem("loggedinUser"));
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedinUser");
+    navigate("/login");
+  };
+
   const navigateToLogin = () => {
+    navigate("/login");
+  };
+  const navigateToRegister = () => {
     navigate("/register");
   };
   return (
@@ -28,13 +36,25 @@ export default function Nav() {
             </Link>
           </Typography>
           {!user ? (
-            <Button color="inherit" onClick={navigateToLogin}>
-              Register
-            </Button>
+            <Box>
+              <Button color="inherit" onClick={navigateToLogin}>
+                Login
+              </Button>
+              <Button color="inherit" onClick={navigateToRegister}>
+                Register
+              </Button>
+            </Box>
           ) : (
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={1.5}>
               <Avatar />
-              {user.email}
+              <Typography variant="overline">{user.email}</Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
             </Box>
           )}
         </Toolbar>

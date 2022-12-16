@@ -41,15 +41,6 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
     setTimeout(() => {
       setMsg(null);
     }, 5000);
-    setFullname("");
-    setEmail(""),
-      setDob(""),
-      setCity(""),
-      setPhone(""),
-      setRegisterDate(""),
-      setProfile(""),
-      setLastAppointment(""),
-      setNextAppointment("");
   };
 
   return (
@@ -62,9 +53,7 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Add new patient
-        </Typography>
+        <Typography variant="h4">Add new patient</Typography>
         <Box component="form" onSubmit={handleAdd} sx={{ mt: 1 }}>
           <Grid container item xs={12} gap={0.5}>
             <Grid item xs={11}>

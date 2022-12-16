@@ -9,9 +9,9 @@ import Container from "@mui/material/Container";
 import loginService from "../services/login";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../reducers/userReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Login() {
+export default function Login({ setMsg, setSeverity }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,13 +20,29 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const user = await loginService.login({
       email,
       password,
     });
-    window.localStorage.setItem("loggedinUser", JSON.stringify(user));
-    dispatch(setUser(user));
-    navigate("/");
+    console.log(user);
+    if (user.email) {
+      setSeverity("success");
+      setMsg("Successfully logged in");
+      setTimeout(() => {
+        setMsg(null);
+      }, 5000);
+      window.localStorage.setItem("loggedinUser", JSON.stringify(user));
+      dispatch(setUser(user));
+      navigate("/");
+    } else {
+      console.log("login component");
+      setSeverity("error");
+      setMsg("invalid username or password");
+      setTimeout(() => {
+        setMsg(null);
+      }, 5000);
+    }
   };
 
   return (
@@ -40,7 +56,7 @@ export default function Login() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField

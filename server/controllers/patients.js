@@ -11,7 +11,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-patientRouter.post("/", uploader.single("file"), async (req, res) => {
+patientRouter.post("/photo", uploader.single("file"), async (req, res) => {
   const upload = await cloudinary.v2.uploader.upload(req.file.path, {
     folder: "patientImg",
   });
@@ -39,24 +39,14 @@ patientRouter.get("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-const getTokenFrom = (req) => {
-  const authorization = req.get("authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    return authorization.substring(7);
-  }
-  return null;
-};
-
 patientRouter.post("/", async (req, res, next) => {
-  const token = getTokenFrom(req);
-  // console.log(token);
+  const token = req.token;
+
   const decodedToken = jwt.verify(token, process.env.SECRET);
-  // console.log(decodedToken.id);
   if (!decodedToken.id) {
     return res.status(401).json({ error: "token missing or invalid" });
   }
   const user = await User.findById(decodedToken.id);
-
   const patient = new Patient({ ...req.body, user: user.fullname });
   patient
     .save()

@@ -28,7 +28,7 @@ export default function PatientList({ query }) {
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow sx={{ background: "#95e6cc" }}>
+            <TableRow sx={{ background: "#2ecc71" }}>
               <TableCell>Special Care</TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Phone number</TableCell>

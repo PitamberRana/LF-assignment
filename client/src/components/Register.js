@@ -12,20 +12,22 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
   const navigate = useNavigate();
 
-  const [fullname, setFullname] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const [fullname, setFullname] = useState(null);
+  const [email, setemail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newUser = await registrService.register({
-      fullname,
-      email,
-      password,
-    });
-    setUser(newUser);
-    navigate("/");
+    try {
+      await registrService.register({
+        fullname,
+        email,
+        password,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -39,7 +41,7 @@ export default function Register() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign up
+          Register
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -92,7 +94,7 @@ export default function Register() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

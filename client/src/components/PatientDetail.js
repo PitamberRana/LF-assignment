@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   Button,
   Container,
@@ -13,8 +15,13 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 
-export default function PatientDetail() {
-  const [value, setValue] = React.useState("1");
+export default function PatientDetail({ hanldeDelete }) {
+  const { id } = useParams();
+
+  const patientList = useSelector((state) => state.patient);
+  const patient = patientList.find((x) => x.id === id);
+
+  const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -31,44 +38,53 @@ export default function PatientDetail() {
               src="https://res.cloudinary.com/drgujw4gf/image/upload/v1670998605/patientImg/jzm1em2ulnm6jjujbbzs.jpg"
               sx={{ width: 120, height: 120 }}
             />
-            <Typography variant="h4"> Ram prasad</Typography>
-            <Typography variant="subtitle2"> Ramprasad@gmail.com</Typography>
+            <Typography variant="h4"> {patient.name}</Typography>
+            <Typography variant="subtitle2"> {patient.email} </Typography>
           </Grid>
           <Grid item xs={7}>
             <Grid container align="center" sx={{ mb: 2 }}>
               <Grid item xs>
                 <Typography variant="subtitle2">Gender</Typography>
-                <Typography variant="overline">female</Typography>
+                <Typography variant="overline">{patient.gender}</Typography>
               </Grid>
               <Grid item xs>
                 <Typography variant="subtitle2">Birthday</Typography>
-                <Typography variant="overline">Dec 20, 1999</Typography>
+                <Typography variant="overline">{patient.dob}</Typography>
               </Grid>
               <Grid item xs>
                 <Typography variant="subtitle2">Phone number</Typography>
-                <Typography variant="overline">9827536171</Typography>
+                <Typography variant="overline">{patient.contact}</Typography>
               </Grid>
             </Grid>
 
             <Grid container align="center" sx={{ mb: 5 }}>
               <Grid item xs>
-                <Typography variant="subtitle2">Street Address</Typography>
-                <Typography variant="overline"> dont know tole</Typography>
+                <Typography variant="subtitle2">Special Attention</Typography>
+                <Typography variant="overline">
+                  {" "}
+                  {patient.special_attention}
+                </Typography>
               </Grid>
               <Grid item xs>
                 <Typography variant="subtitle2">City</Typography>
-                <Typography variant="overline">pokhara</Typography>
+                <Typography variant="overline">{patient.city}</Typography>
               </Grid>
               <Grid item xs>
                 <Typography variant="subtitle2">Register date</Typography>
-                <Typography variant="overline">Apr 21, 2022</Typography>
+                <Typography variant="overline">
+                  {patient.register_date}
+                </Typography>
               </Grid>
             </Grid>
             <Box display="flex" justifyContent="flex-end" gap={3}>
               <Button variant="contained" color="secondary">
                 Edit
               </Button>
-              <Button variant="contained" color="error">
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => hanldeDelete(patient.id)}
+              >
                 Delete
               </Button>
             </Box>
@@ -82,8 +98,8 @@ export default function PatientDetail() {
             <Tab label="Last Appointment" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1"> Date last </TabPanel>
-        <TabPanel value="2"> Date next</TabPanel>
+        <TabPanel value="1"> {patient.last_appointment} </TabPanel>
+        <TabPanel value="2"> {patient.next_appointment}</TabPanel>
       </TabContext>
     </Container>
   );

@@ -7,17 +7,13 @@ import Edit from "./components/Edit";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import PatientDetail from "./components/PatientDetail";
-import { getPatient } from "./reducers/patientReducer";
+import { getPatient, removePatient } from "./reducers/patientReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "./reducers/userReducer";
 import Notification from "./components/Notification";
-import patientService from "./services/patient";
 
 function App() {
   const [msg, setMsg] = useState(null);
   const [severity, setSeverity] = useState("");
-
-  const patientList = useSelector((state) => state.patient);
 
   // const user = useSelector((state) => state.user);
   const user = window.localStorage.getItem("loggedinUser");
@@ -27,17 +23,9 @@ function App() {
     dispatch(getPatient());
   }, [dispatch]);
 
-  const addPatient = (patientObj) => {
-    patientService
-      .create(patientObj)
-      .then((returnedObj) => {
-        const newlist = patientList.concat(returnedObj);
-        console.log(newlist);
-      })
-      .catch(function (err) {
-        setSeverity("error");
-        setMsg(err.response.data.error);
-      });
+  const hanldeDelete = (id) => {
+    dispatch(removePatient(id));
+    dispatch(getPatient());
   };
 
   return (
@@ -51,7 +39,7 @@ function App() {
             path="/"
             element={
               user ? (
-                <Home />
+                <Home hanldeDelete={hanldeDelete} />
               ) : (
                 <Login setMsg={setMsg} setSeverity={setSeverity} />
               )
@@ -59,18 +47,18 @@ function App() {
           />
           <Route
             path="/add"
-            element={
-              <Add
-                addPatient={addPatient}
-                setSeverity={setSeverity}
-                setMsg={setMsg}
-              />
-            }
+            element={<Add setSeverity={setSeverity} setMsg={setMsg} />}
           />
           <Route path="/login" element={<Login />} />
-          <Route path="/edit" element={<Edit />} />
-          <Route path="/id" element={<PatientDetail />} />
+          <Route
+            path="/edit/:id"
+            element={<Edit setMsg={setMsg} setSeverity={setSeverity} />}
+          />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/patientList/:id"
+            element={<PatientDetail hanldeDelete={hanldeDelete} />}
+          />
         </Routes>
       </Router>
     </>

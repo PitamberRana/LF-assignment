@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import PatientList from "./PatientList";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ hanldeDelete }) {
   const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Home() {
       <Button variant="contained" sx={{ mt: 3 }} onClick={handleAdd}>
         Add new entry
       </Button>
-      <PatientList query={query} />
+      <PatientList hanldeDelete={hanldeDelete} query={query} />
     </div>
   );
 }

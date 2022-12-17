@@ -8,10 +8,63 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Grid from "@mui/material/Grid";
+import { updatePatient } from "../reducers/patientReducer";
+import { useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export default function Edit() {
-  const handleEdit = (id) => {
-    console.log("edit", id);
+export default function Edit({ setSeverity, setMsg }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  const patientList = useSelector((state) => state.patient);
+
+  const selectedPatient = patientList.find((x) => x.id === id);
+
+  const [newFullname, setFullname] = useState(selectedPatient.name);
+  const [newEmail, setEmail] = useState(selectedPatient.email);
+  const [newPhone, setPhone] = useState(selectedPatient.contact);
+  const [newCity, setCity] = useState(selectedPatient.city);
+  const [newProfile, setProfile] = useState(selectedPatient.profile_pic);
+  const [newDob, setDob] = useState(selectedPatient.dob);
+  const [newLastAppointment, setLastAppointment] = useState(
+    selectedPatient.last_appointment
+  );
+  const [newNextAppointment, setNextAppointment] = useState(
+    selectedPatient.next_appointment
+  );
+  const [newRegisterDate, setRegisterDate] = useState(
+    selectedPatient.register_date
+  );
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
+    const updatedPatient = {
+      name: newFullname,
+      email: newEmail,
+      contact: newPhone,
+      city: newCity,
+      profile_pic: newProfile,
+      dob: newDob,
+      last_appointment: newLastAppointment,
+      next_appointment: newNextAppointment,
+      register_date: newRegisterDate,
+    };
+    setSeverity("success");
+    setMsg(`Successfully edited ${updatePatient.name}.`);
+    setTimeout(() => {
+      setMsg(null);
+    }, 5000);
+    navigate("/");
+    dispatch(updatePatient(selectedPatient.id, updatedPatient)).catch(function (
+      err
+    ) {
+      setSeverity("error");
+      setMsg(err.response.data.error);
+    });
   };
 
   return (
@@ -30,87 +83,70 @@ export default function Edit() {
             <Grid item xs={11}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
-                id="fullname"
                 label="Full name"
-                name="fullname"
-                // value={newFullname}
-                // onChange={(e) => setFullname(e.target.value)}
+                value={newFullname}
+                onChange={(e) => setFullname(e.target.value)}
               />
             </Grid>
             <Grid item xs={6.5}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
-                id="email"
                 label="E-mail"
-                name="email"
-                // value={newEmail}
-                // onChange={(e) => setEmail(e.target.value)}
+                value={newEmail}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={4.4}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Date of Birth"
-                  // value={newDob}
-                  // onChange={(newValue) => {
-                  //   setDob(newValue);
-                  // }}
+                  value={newDob}
+                  onChange={(newValue) => {
+                    setDob(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField sx={{ mt: 2 }} required fullWidth {...params} />
                   )}
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
-                id="profile"
                 label="Profile pic"
-                name="profile"
-                // value={newProfile}
-                // onChange={(e) => setProfile(e.target.value)}
+                value={newProfile}
+                onChange={(e) => setProfile(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
-                name="phone"
                 label="Phone number"
-                type="phone"
-                id="phone"
-                // value={newPhone}
-                // onChange={(e) => setPhone(e.target.value)}
+                value={newPhone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
-                name="city"
                 label="City "
-                type="city"
-                id="city"
-                // value={newCity}
-                // onChange={(e) => setCity(e.target.value)}
+                value={newCity}
+                onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Register date"
-                  // value={newRegisterDate}
-                  // onChange={(newValue) => {
-                  //   setRegisterDate(newValue);
-                  // }}
+                  value={newRegisterDate}
+                  onChange={(newValue) => {
+                    setRegisterDate(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
                   )}
@@ -121,10 +157,10 @@ export default function Edit() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Last appointment"
-                  // value={newLastAppointment}
-                  // onChange={(newValue) => {
-                  //   setLastAppointment(newValue);
-                  // }}
+                  value={newLastAppointment}
+                  onChange={(newValue) => {
+                    setLastAppointment(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
                   )}
@@ -135,10 +171,10 @@ export default function Edit() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Next appointment"
-                  // value={newNextAppointment}
-                  // onChange={(newValue) => {
-                  //   setNextAppointment(newValue);
-                  // }}
+                  value={newNextAppointment}
+                  onChange={(newValue) => {
+                    setNextAppointment(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
                   )}
@@ -146,7 +182,7 @@ export default function Edit() {
               </LocalizationProvider>
             </Grid>
 
-            <Grid container sx={{ mt: 1 }} gap={2} xs={12}>
+            <Grid container item sx={{ mt: 1 }} gap={2} xs={12}>
               <Grid item xs={6}>
                 <Button type="submit" fullWidth variant="contained">
                   Edit

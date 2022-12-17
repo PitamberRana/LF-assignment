@@ -10,37 +10,45 @@ import Container from "@mui/material/Container";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useDispatch } from "react-redux";
+import { addNewPatient } from "../reducers/patientReducer";
+import { useNavigate } from "react-router-dom";
 
-export default function Add({ addPatient, setSeverity, setMsg }) {
-  const [newFullname, setFullname] = useState("");
-  const [newEmail, setEmail] = useState("");
-  const [newPhone, setPhone] = useState("");
-  const [newCity, setCity] = useState("");
-  const [newProfile, setProfile] = useState("");
+export default function Add({ setSeverity, setMsg }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [newDob, setDob] = useState(null);
   const [newLastAppointment, setLastAppointment] = useState(null);
   const [newNextAppointment, setNextAppointment] = useState(null);
   const [newRegisterDate, setRegisterDate] = useState(null);
+  const [specialCare, setSpecialCare] = useState(false);
 
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    addPatient({
-      name: newFullname,
-      email: newEmail,
-      contact: newPhone,
-      city: newCity,
-      profile_pic: newProfile,
+    const newPatient = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      contact: e.target.contact.value,
+      city: e.target.city.value,
+      profile_pic: e.target.profile.value,
       dob: newDob,
       last_appointment: newLastAppointment,
       next_appointment: newNextAppointment,
       register_date: newRegisterDate,
-    });
+      special_attention: specialCare,
+    };
     setSeverity("success");
-    setMsg("Successfully added.");
+    setMsg(`Successfully added ${newPatient.name} .`);
     setTimeout(() => {
       setMsg(null);
     }, 5000);
+    navigate("/");
+    dispatch(addNewPatient(newPatient)).catch(function (err) {
+      setSeverity("error");
+      setMsg(err.response.data.error);
+    });
   };
 
   return (
@@ -63,9 +71,7 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
                 fullWidth
                 id="fullname"
                 label="Full name"
-                name="fullname"
-                value={newFullname}
-                onChange={(e) => setFullname(e.target.value)}
+                name="name"
               />
             </Grid>
             <Grid item xs={6.5}>
@@ -76,8 +82,6 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
                 id="email"
                 label="E-mail"
                 name="email"
-                value={newEmail}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={4.4}>
@@ -94,7 +98,7 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
                 required
@@ -102,24 +106,19 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
                 id="profile"
                 label="Profile pic"
                 name="profile"
-                value={newProfile}
-                onChange={(e) => setProfile(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="phone"
+                name="contact"
                 label="Phone number"
-                type="phone"
                 id="phone"
-                value={newPhone}
-                onChange={(e) => setPhone(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <TextField
                 margin="normal"
                 required
@@ -128,11 +127,9 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
                 label="City "
                 type="city"
                 id="city"
-                value={newCity}
-                onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
-            <Grid container item xs={11}>
+            <Grid item xs={11}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Register date"
@@ -175,10 +172,17 @@ export default function Add({ addPatient, setSeverity, setMsg }) {
               </LocalizationProvider>
             </Grid>
             <FormControlLabel
-              control={<Checkbox />}
+              control={
+                <Checkbox
+                  value={specialCare}
+                  onChange={() => {
+                    setSpecialCare(true);
+                  }}
+                />
+              }
               label="Is a special attention needed patient?"
             />
-            <Grid container sx={{ mt: 1 }} gap={2} xs={12}>
+            <Grid container item sx={{ mt: 1 }} gap={2} xs={12}>
               <Grid item xs={6}>
                 <Button type="submit" fullWidth variant="contained">
                   Add

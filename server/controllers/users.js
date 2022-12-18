@@ -72,9 +72,10 @@ userRouter.post("/renewAccessToken", async (req, res, next) => {
   try {
     const refreshToken = req.body.token;
     if (!refreshToken)
-      return res.status(403).json({ message: "user not authenticated" });
+      return res.status(403).json({ error: "user not authenticated" });
+
     const user = jwt.verify(refreshToken, config.REFRESH);
-    console.log(user);
+    console.log("2", user);
     const userForToken = {
       email: user.email,
       id: user.id,
@@ -82,6 +83,7 @@ userRouter.post("/renewAccessToken", async (req, res, next) => {
     const accessToken = jwt.sign(userForToken, config.SECRET, {
       expiresIn: 60 * 60,
     });
+    console.log(accessToken);
     res.status(200).json({ accessToken });
   } catch (error) {
     next(error);

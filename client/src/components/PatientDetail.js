@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  Button,
-  Container,
-  Paper,
-  Avatar,
-  Typography,
-  Grid,
-  Box,
-} from "@mui/material";
+import { Container, Paper, Avatar, Typography, Grid, Box } from "@mui/material";
+import { Button } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
+import { Icon } from "@iconify/react";
 
-export default function PatientDetail({ hanldeDelete }) {
+export default function PatientDetail() {
   const { id } = useParams();
 
   const patientList = useSelector((state) => state.patient);
-  const patient = patientList.find((x) => x.id === id);
+  const patient = patientList?.find((x) => x.id === id);
 
   const [value, setValue] = useState("1");
 
@@ -29,8 +23,11 @@ export default function PatientDetail({ hanldeDelete }) {
 
   return (
     <Container sx={{ mt: 5 }}>
-      <Button variant="contained"> Back</Button>
-      <Paper sx={{ mt: 3, p: 4 }}>
+      <Button variant="contained" color="primary">
+        {" "}
+        Back
+      </Button>
+      <Paper sx={{ mt: 3, p: 4, mb: 2 }}>
         <Grid container align="center">
           <Grid item xs={4}>
             <Avatar
@@ -76,26 +73,23 @@ export default function PatientDetail({ hanldeDelete }) {
                 </Typography>
               </Grid>
             </Grid>
-            <Box display="flex" justifyContent="flex-end" gap={3}>
-              <Button variant="contained" color="secondary">
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => hanldeDelete(patient.id)}
-              >
-                Delete
-              </Button>
-            </Box>
           </Grid>
         </Grid>
       </Paper>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="">
-            <Tab label="Next Appointment" value="1" />
-            <Tab label="Last Appointment" value="2" />
+          <TabList onChange={handleChange}>
+            <Tab
+              label="Next Appointment"
+              value="1"
+              icon={<Icon icon="mdi:page-next" height={24} />}
+            />
+
+            <Tab
+              label="Last Appointment"
+              value="2"
+              icon={<Icon icon="mdi:page-previous" height={24} />}
+            />
           </TabList>
         </Box>
         <TabPanel value="1"> {patient.last_appointment} </TabPanel>

@@ -37,19 +37,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              user ? (
-                <Home hanldeDelete={hanldeDelete} />
-              ) : (
-                <Login setMsg={setMsg} setSeverity={setSeverity} />
-              )
-            }
+            element={user ? <Home hanldeDelete={hanldeDelete} /> : <Login />}
           />
           <Route
             path="/add"
             element={<Add setSeverity={setSeverity} setMsg={setMsg} />}
           />
-          <Route path="/login" element={<Login />} />
           <Route
             path="/edit/:id"
             element={<Edit setMsg={setMsg} setSeverity={setSeverity} />}
@@ -58,6 +51,10 @@ function App() {
           <Route
             path="/patientList/:id"
             element={<PatientDetail hanldeDelete={hanldeDelete} />}
+          />
+          <Route
+            path="*"
+            element={<Login setMsg={setMsg} setSeverity={setSeverity} />}
           />
         </Routes>
       </Router>

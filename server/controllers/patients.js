@@ -11,7 +11,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-patientRouter.post("/", uploader.single("file"), async (req, res) => {
+patientRouter.post("/photo", uploader.single("file"), async (req, res) => {
   const upload = await cloudinary.v2.uploader.upload(req.file.path, {
     folder: "patientImg",
   });

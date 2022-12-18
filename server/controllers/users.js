@@ -12,6 +12,12 @@ userRouter.get("/", async (req, res) => {
 userRouter.post("/register", async (request, response) => {
   const { fullname, email, password } = request.body;
 
+  if (password.length <= 3) {
+    return response
+      .status(400)
+      .json({ error: "Password must be at least 4 character long." });
+  }
+
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return response.status(400).json({
@@ -53,7 +59,30 @@ userRouter.post("/login", async (req, res, next) => {
       id: user.id,
     };
     const token = jwt.sign(userForToken, config.SECRET, { expiresIn: 60 * 60 });
-    res.status(200).json({ token, email: user.email, id: user.id });
+    const refresh = jwt.sign(userForToken, config.REFRESH, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).json({ token, email: user.email, id: user.id, refresh });
+  } catch (error) {
+    next(error);
+  }
+});
+userRouter.post("/renewAccessToken", async (req, res, next) => {
+  try {
+    const refreshToken = req.body.token;
+    if (!refreshToken)
+      return res.status(403).json({ message: "user not authenticated" });
+    const user = jwt.verify(refreshToken, config.REFRESH);
+    console.log(user);
+    const userForToken = {
+      email: user.email,
+      id: user.id,
+    };
+    const accessToken = jwt.sign(userForToken, config.SECRET, {
+      expiresIn: 60 * 60,
+    });
+    res.status(200).json({ accessToken });
   } catch (error) {
     next(error);
   }

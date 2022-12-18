@@ -125,6 +125,7 @@ export default function Edit({ setSeverity, setMsg }) {
               <TextField
                 margin="normal"
                 fullWidth
+                id="contact"
                 label="Phone number"
                 value={newPhone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -184,7 +185,12 @@ export default function Edit({ setSeverity, setMsg }) {
 
             <Grid container item sx={{ mt: 1 }} gap={2} xs={12}>
               <Grid item xs={6}>
-                <Button type="submit" fullWidth variant="contained">
+                <Button
+                  id="edit-button"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                >
                   Edit
                 </Button>
               </Grid>

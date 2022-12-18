@@ -83,6 +83,7 @@ export default function Login({ setMsg, setSeverity }) {
             onChange={({ target }) => setPassword(target.value)}
           />
           <Button
+            id="login-button"
             type="submit"
             fullWidth
             variant="contained"

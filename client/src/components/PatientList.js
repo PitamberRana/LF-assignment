@@ -16,12 +16,12 @@ import { Icon } from "@iconify/react";
 export default function PatientList({ hanldeDelete, query }) {
   const navigate = useNavigate();
 
-  const getpatientList = useSelector((state) => state.patient);
+  const patientList = useSelector((state) => state.patient);
 
-  const patientList = getpatientList?.sort((a, b) =>
-    a.name < b.name ? -1 : 1
-  );
-  console.log(patientList);
+  // const patientList = getpatientList?.sort((a, b) =>
+  //   a.name < b.name ? -1 : 1
+  // );
+  // console.log(patientList);
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);

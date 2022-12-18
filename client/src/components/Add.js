@@ -22,7 +22,7 @@ export default function Add({ setSeverity, setMsg }) {
   const [newLastAppointment, setLastAppointment] = useState(null);
   const [newNextAppointment, setNextAppointment] = useState(null);
   const [newRegisterDate, setRegisterDate] = useState(null);
-  const [specialCare, setSpecialCare] = useState(false);
+  const [specialCare, setSpecialCare] = useState(true);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -50,6 +50,12 @@ export default function Add({ setSeverity, setMsg }) {
       setMsg(err.response.data.error);
     });
   };
+
+  const handleCheck = () => {
+    setSpecialCare(!specialCare);
+  };
+
+  console.log(specialCare);
 
   return (
     <Container component="main" maxWidth="sm">
@@ -93,7 +99,13 @@ export default function Add({ setSeverity, setMsg }) {
                     setDob(newValue);
                   }}
                   renderInput={(params) => (
-                    <TextField sx={{ mt: 2 }} required fullWidth {...params} />
+                    <TextField
+                      id="dob"
+                      sx={{ mt: 2 }}
+                      required
+                      fullWidth
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
@@ -115,7 +127,7 @@ export default function Add({ setSeverity, setMsg }) {
                 fullWidth
                 name="contact"
                 label="Phone number"
-                id="phone"
+                id="contact"
               />
             </Grid>
             <Grid item xs={11}>
@@ -138,7 +150,12 @@ export default function Add({ setSeverity, setMsg }) {
                     setRegisterDate(newValue);
                   }}
                   renderInput={(params) => (
-                    <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
+                    <TextField
+                      id="register-date"
+                      sx={{ mt: 1, mb: 1 }}
+                      fullWidth
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
@@ -152,7 +169,12 @@ export default function Add({ setSeverity, setMsg }) {
                     setLastAppointment(newValue);
                   }}
                   renderInput={(params) => (
-                    <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
+                    <TextField
+                      id="last-appointment"
+                      sx={{ mt: 1, mb: 1 }}
+                      fullWidth
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
@@ -166,25 +188,29 @@ export default function Add({ setSeverity, setMsg }) {
                     setNextAppointment(newValue);
                   }}
                   renderInput={(params) => (
-                    <TextField sx={{ mt: 1, mb: 1 }} fullWidth {...params} />
+                    <TextField
+                      id="next-appointment"
+                      sx={{ mt: 1, mb: 1 }}
+                      fullWidth
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
             </Grid>
             <FormControlLabel
-              control={
-                <Checkbox
-                  value={specialCare}
-                  onChange={() => {
-                    setSpecialCare(true);
-                  }}
-                />
-              }
+              control={<Checkbox defaultChecked onChange={handleCheck} />}
               label="Is a special attention needed patient?"
+              id="checkbox"
             />
             <Grid container item sx={{ mt: 1 }} gap={2} xs={12}>
               <Grid item xs={6}>
-                <Button type="submit" fullWidth variant="contained">
+                <Button
+                  id="add-button"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                >
                   Add
                 </Button>
               </Grid>

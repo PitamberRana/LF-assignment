@@ -85,6 +85,7 @@ export default function Register() {
             </Grid>
           </Grid>
           <Button
+            id="register-button"
             type="submit"
             fullWidth
             variant="contained"

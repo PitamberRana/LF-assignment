@@ -54,17 +54,22 @@ export default function PatientList({ hanldeDelete, query }) {
               ?.map((data) => (
                 <TableRow
                   key={data.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    textDecoration: "none",
+                  }}
+                  component={Link}
+                  to={{ pathname: `/patientList/${data.id}` }}
                 >
                   <TableCell align="left">
-                    <Link to={`/patientList/${data.id}`}>
-                      <img
-                        src={data.profile_pic}
-                        alt={data.name}
-                        height={50}
-                        width={50}
-                      />
-                    </Link>
+                    {/* <Link to={`/patientList/${data.id}`}> */}
+                    <img
+                      src={data.profile_pic}
+                      alt={data.name}
+                      height={50}
+                      width={50}
+                    />
+                    {/* </Link> */}
                   </TableCell>
                   <TableCell align="left">
                     <Box display="flex" alignItems="center" gap={2}>
@@ -83,8 +88,23 @@ export default function PatientList({ hanldeDelete, query }) {
                   <TableCell align="left">{data.next_appointment}</TableCell>
                   <TableCell align="left">{data.register_date}</TableCell>
                   <TableCell>
-                    <Button onClick={() => handleEdit(data.id)}>Edit</Button>
-                    <Button color="error" onClick={() => hanldeDelete(data.id)}>
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleEdit(data.id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      color="error"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hanldeDelete(data.id);
+                      }}
+                    >
                       delete
                     </Button>{" "}
                   </TableCell>

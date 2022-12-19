@@ -41,27 +41,34 @@ for building in frontend & backend. From server run
 
 ## Overview of whole app
 
-**login page**
+**LOGIN PAGE**
 ![login](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428432/patient%20app%20over/Screen_Shot_2022-12-19_at_11.17.54_AM_e6fiff.png)
 
-**register page**
+
+**REGISTER PAGE**
 ![register](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428433/patient%20app%20over/Screen_Shot_2022-12-19_at_11.18.03_AM_e7ydth.png)
 
-**home page**
+
+**HOME PAGE**
 ![home](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428433/patient%20app%20over/Screen_Shot_2022-12-19_at_11.18.16_AM_yupsim.png)
 
-**add profile page**
+
+**ADD PROFILE PAGE**
 ![add](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428432/patient%20app%20over/Screen_Shot_2022-12-19_at_11.19.32_AM_mvegvu.png)
 
-**edit profile page**
+
+**EDIT PROFILE PAGE**
 ![edit](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428433/patient%20app%20over/Screen_Shot_2022-12-19_at_11.19.43_AM_oj2ifp.png)
 
-**patient detail page**
+
+**PATIENT DETAIL PAGE**
 ![detail](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428432/patient%20app%20over/Screen_Shot_2022-12-19_at_11.20.03_AM_gnpf09.png)
 
-**unit test**
+
+**UNIT TEST**
 ![unit test](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428434/patient%20app%20over/Screen_Shot_2022-12-18_at_1.34.02_PM_g8fdc6.png)
 
-**cypress test**
+
+**CYPRESS TEST**
 ![cy](https://res.cloudinary.com/drgujw4gf/image/upload/v1671428433/patient%20app%20over/Screen_Shot_2022-12-18_at_1.30.44_PM_jf1tk2.png)
 

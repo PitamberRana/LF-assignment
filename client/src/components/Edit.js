@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -19,25 +19,32 @@ export default function Edit({ setSeverity, setMsg }) {
 
   const { id } = useParams();
 
-  const patientList = useSelector((state) => state.patient);
+  const patientListState = useSelector((state) => state.patient);
+  const patientList = patientListState ? patientListState : null;
 
-  const selectedPatient = patientList.find((x) => x.id === id);
+  const selectedPatient = patientList?.find((x) => x.id === id);
 
-  const [newFullname, setFullname] = useState(selectedPatient.name);
-  const [newEmail, setEmail] = useState(selectedPatient.email);
-  const [newPhone, setPhone] = useState(selectedPatient.contact);
-  const [newCity, setCity] = useState(selectedPatient.city);
-  const [newProfile, setProfile] = useState(selectedPatient.profile_pic);
-  const [newDob, setDob] = useState(selectedPatient.dob);
-  const [newLastAppointment, setLastAppointment] = useState(
-    selectedPatient.last_appointment
-  );
-  const [newNextAppointment, setNextAppointment] = useState(
-    selectedPatient.next_appointment
-  );
-  const [newRegisterDate, setRegisterDate] = useState(
-    selectedPatient.register_date
-  );
+  const [newFullname, setFullname] = useState("");
+  const [newEmail, setEmail] = useState("");
+  const [newPhone, setPhone] = useState("");
+  const [newCity, setCity] = useState("");
+  const [newProfile, setProfile] = useState("");
+  const [newDob, setDob] = useState("");
+  const [newLastAppointment, setLastAppointment] = useState("");
+  const [newNextAppointment, setNextAppointment] = useState("");
+  const [newRegisterDate, setRegisterDate] = useState("");
+
+  useEffect(() => {
+    setFullname(selectedPatient?.name);
+    setEmail(selectedPatient?.email);
+    setPhone(selectedPatient?.contact);
+    setCity(selectedPatient?.city);
+    setProfile(selectedPatient?.profile_pic);
+    setDob(selectedPatient?.dob);
+    setLastAppointment(selectedPatient?.last_appointment);
+    setNextAppointment(selectedPatient?.next_appointment);
+    setRegisterDate(selectedPatient?.register_date);
+  }, [selectedPatient]);
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -69,6 +76,19 @@ export default function Edit({ setSeverity, setMsg }) {
 
   const handleCancel = () => {
     navigate("/");
+  };
+
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+
+    const Reader = new FileReader();
+    Reader.readAsDataURL(file);
+
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setProfile(Reader.result);
+      }
+    };
   };
 
   return (
@@ -117,12 +137,20 @@ export default function Edit({ setSeverity, setMsg }) {
               </LocalizationProvider>
             </Grid>
             <Grid item xs={11}>
+              <img
+                src={selectedPatient?.profile_pic}
+                alt={selectedPatient?.name}
+                height={100}
+                weight={120}
+              />
               <TextField
+                id="profile"
+                name="profile"
                 margin="normal"
                 fullWidth
-                label="Profile pic"
-                value={newProfile}
-                onChange={(e) => setProfile(e.target.value)}
+                type="file"
+                accept="image/*"
+                onChange={uploadImage}
               />
             </Grid>
             <Grid item xs={11}>

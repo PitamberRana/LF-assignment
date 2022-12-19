@@ -20,6 +20,7 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("I am in app useeffect");
     dispatch(getPatient());
   }, [dispatch]);
 

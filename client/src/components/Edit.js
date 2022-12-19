@@ -67,6 +67,10 @@ export default function Edit({ setSeverity, setMsg }) {
     });
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <Container component="main" maxWidth="sm">
       <Box
@@ -195,7 +199,12 @@ export default function Edit({ setSeverity, setMsg }) {
                 </Button>
               </Grid>
               <Grid item xs={4.6}>
-                <Button type="submit" fullWidth variant="outlined">
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  onClick={handleCancel}
+                >
                   Cancel
                 </Button>
               </Grid>

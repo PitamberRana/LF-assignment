@@ -38,7 +38,7 @@ export default function PatientList({ hanldeDelete, query }) {
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
             >
-              <TableCell align="center">No.</TableCell>
+              <TableCell align="center">Profile</TableCell>
               <TableCell align="center"> Name</TableCell>
               <TableCell align="center">Phone number</TableCell>
               <TableCell align="center">City</TableCell>

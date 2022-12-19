@@ -53,6 +53,10 @@ export default function Add({ setSeverity, setMsg }) {
     });
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   const handleCheck = () => {
     setSpecialCare(!specialCare);
   };
@@ -239,7 +243,12 @@ export default function Add({ setSeverity, setMsg }) {
                 </Button>
               </Grid>
               <Grid item xs={4.6}>
-                <Button type="submit" fullWidth variant="outlined">
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  onClick={handleCancel}
+                >
                   Cancel
                 </Button>
               </Grid>

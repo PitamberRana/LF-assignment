@@ -11,8 +11,11 @@ import { Icon } from "@iconify/react";
 
 export default function PatientDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const patientList = useSelector((state) => state.patient);
+  console.log(patientList);
+
   const patient = patientList?.find((x) => x.id === id);
 
   const [value, setValue] = useState("1");
@@ -20,21 +23,25 @@ export default function PatientDetail() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const handleBack = () => {
+    navigate("/");
+  };
+  if (!patient) return <></>;
   return (
     <Container sx={{ mt: 5 }}>
-      <Button variant="contained" color="primary">
-        {" "}
+      <Button variant="contained" color="primary" onClick={handleBack}>
         Back
       </Button>
+
       <Paper sx={{ mt: 3, p: 4, mb: 2 }}>
         <Grid container align="center">
           <Grid item xs={4}>
             <Avatar
               alt="profile"
-              src="https://res.cloudinary.com/drgujw4gf/image/upload/v1670998605/patientImg/jzm1em2ulnm6jjujbbzs.jpg"
+              src={patient.profile_pic}
               sx={{ width: 120, height: 120 }}
             />
+
             <Typography variant="h4"> {patient.name}</Typography>
             <Typography variant="subtitle2"> {patient.email} </Typography>
           </Grid>
@@ -58,8 +65,7 @@ export default function PatientDetail() {
               <Grid item xs>
                 <Typography variant="subtitle2">Special Attention</Typography>
                 <Typography variant="overline">
-                  {" "}
-                  {patient.special_attention}
+                  {`${patient.special_attention}`}
                 </Typography>
               </Grid>
               <Grid item xs>
@@ -76,6 +82,7 @@ export default function PatientDetail() {
           </Grid>
         </Grid>
       </Paper>
+
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange}>

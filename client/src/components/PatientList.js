@@ -38,7 +38,7 @@ export default function PatientList({ hanldeDelete, query }) {
                 "&:last-child td, &:last-child th": { border: 1 },
               }}
             >
-              <TableCell align="center">Image</TableCell>
+              <TableCell align="center">No.</TableCell>
               <TableCell align="center"> Name</TableCell>
               <TableCell align="center">Phone number</TableCell>
               <TableCell align="center">City</TableCell>
@@ -57,14 +57,21 @@ export default function PatientList({ hanldeDelete, query }) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">
-                    <Link to={`/patientList/${data.id}`}>img</Link>
+                    <Link to={`/patientList/${data.id}`}>
+                      <img
+                        src={data.profile_pic}
+                        alt={data.name}
+                        height={50}
+                        width={50}
+                      />
+                    </Link>
                   </TableCell>
                   <TableCell align="left">
                     <Box display="flex" alignItems="center" gap={2}>
                       <Icon
                         icon="material-symbols:medical-services-rounded"
-                        width="22"
-                        height="22"
+                        width="24"
+                        height="24"
                         color={data.special_attention ? "#FFC000" : "grey"}
                       />
                       {data.name}

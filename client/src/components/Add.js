@@ -13,11 +13,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch } from "react-redux";
 import { addNewPatient } from "../reducers/patientReducer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Add({ setSeverity, setMsg }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [profile, setProfile] = useState("");
   const [newDob, setDob] = useState(null);
   const [newLastAppointment, setLastAppointment] = useState(null);
   const [newNextAppointment, setNextAppointment] = useState(null);
@@ -32,7 +34,7 @@ export default function Add({ setSeverity, setMsg }) {
       email: e.target.email.value,
       contact: e.target.contact.value,
       city: e.target.city.value,
-      profile_pic: e.target.profile.value,
+      profile_pic: profile,
       dob: newDob,
       last_appointment: newLastAppointment,
       next_appointment: newNextAppointment,
@@ -55,7 +57,26 @@ export default function Add({ setSeverity, setMsg }) {
     setSpecialCare(!specialCare);
   };
 
-  console.log(specialCare);
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+
+    const Reader = new FileReader();
+    Reader.readAsDataURL(file);
+
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setProfile(Reader.result);
+      }
+    };
+    // };
+    // const formData = new FormData();
+    // console.log(formData);
+    // formData.append("file", files[0]);
+    // formData.append("upload_preset", "flzya9vx");
+    // axios
+    //   .post("https://api.cloudinary.com/v1_1/drgujw4gf/image/upload", formData)
+    //   .then((res) => console.log(res));
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -112,12 +133,15 @@ export default function Add({ setSeverity, setMsg }) {
             </Grid>
             <Grid item xs={11}>
               <TextField
+                type="file"
                 margin="normal"
                 required
                 fullWidth
                 id="profile"
-                label="Profile pic"
+                // label="Profile pic"
                 name="profile"
+                accept="image/*"
+                onChange={uploadImage}
               />
             </Grid>
             <Grid item xs={11}>

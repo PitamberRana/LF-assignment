@@ -11,15 +11,15 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-patientRouter.post("/photo", uploader.single("file"), async (req, res) => {
-  const upload = await cloudinary.v2.uploader.upload(req.file.path, {
-    folder: "patientImg",
-  });
-  return res.json({
-    success: true,
-    imgUrl: upload.secure_url,
-  });
-});
+// patientRouter.post("/photo", uploader.single("file"), async (req, res) => {
+//   const upload = await cloudinary.v2.uploader.upload(req.file.path, {
+//     folder: "patientImg",
+//   });
+//   return res.json({
+//     success: true,
+//     imgUrl: upload.secure_url,
+//   });
+// });
 
 patientRouter.get("/", (req, res) => {
   Patient.find({}).then((patients) => {
@@ -41,13 +41,49 @@ patientRouter.get("/:id", (req, res, next) => {
 
 patientRouter.post("/", async (req, res, next) => {
   const token = req.token;
+  const {
+    name,
+    email,
+    contact,
+    city,
+    dob,
+    profile_pic,
+    register_date,
+    last_appointment,
+    next_appointment,
+    special_attention,
+  } = req.body;
 
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!decodedToken.id) {
     return res.status(401).json({ error: "token missing or invalid" });
   }
   const user = await User.findById(decodedToken.id);
-  const patient = new Patient({ ...req.body, user: user.fullname });
+
+  const myCloud = await cloudinary.v2.uploader.upload(
+    profile_pic,
+    {
+      folder: "patientImg",
+    },
+    (err, result) => {
+      if (err) throw err;
+      return result.secure_url;
+    }
+  );
+
+  const patient = new Patient({
+    name,
+    email,
+    contact,
+    city,
+    dob,
+    profile_pic: myCloud.secure_url,
+    register_date,
+    last_appointment,
+    next_appointment,
+    special_attention,
+    user: user.fullname,
+  });
   patient
     .save()
     .then((savedpatient) => {

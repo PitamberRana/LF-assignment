@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import PatientList from "./PatientList";
 import { useNavigate } from "react-router-dom";
-import frog from "../img/1456767826-Young_animation_animal022916_01.gif";
 
 export default function Home({ hanldeDelete }) {
   const [query, setQuery] = useState("");
@@ -19,9 +18,6 @@ export default function Home({ hanldeDelete }) {
   return (
     <div>
       <Grid container>
-        <Grid item xs sx={{ ml: 20 }}>
-          <img src={frog} alt="gif" height={70} width={450} />
-        </Grid>
         <Grid item xs>
           <Box display="flex" justifyContent="flex-end" gap={3}>
             <TextField

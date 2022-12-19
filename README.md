@@ -29,10 +29,6 @@ and for running client
 
 **npm start**
 
-for building in frontend & backend. From server run
-
-**npm run build:ui**
-
 ## POSTMAN API collection & documentation link
 
 [POSTMAN API collection] (https://api.postman.com/collections/24856733-ca5289ee-66cb-4399-97cb-06abc1cb2f28?access_key=PMAT-01GMMBFGHEQT19VZ9C5X5ERWQP)
